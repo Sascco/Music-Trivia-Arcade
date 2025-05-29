@@ -56,6 +56,31 @@
     color: #ffff00;
     }
 
+    .user-info {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    padding: 15px 25px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    z-index: 1000;
+    }
+
+    .user-label {
+    font-size: 0.8rem;
+    color: #ff00ff;
+    margin-bottom: 5px;
+    }
+
+    .user-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffff00;
+    }
+
     .header {
     text-align: center;
     margin-bottom: 40px;
@@ -72,6 +97,138 @@
     animation: neonGlow 2s ease-in-out infinite alternate, gradientShift 3s ease-in-out infinite;
     text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
     margin-bottom: 20px;
+    }
+
+    .auth-buttons {
+    text-align: center;
+    margin-bottom: 30px;
+    }
+
+    .auth-btn {
+    background: linear-gradient(45deg, #00ffff, #0099cc);
+    border: none;
+    color: #000;
+    padding: 12px 25px;
+    margin: 0 10px;
+    border-radius: 20px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+
+    .auth-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+    }
+
+    .auth-btn.logout {
+    background: linear-gradient(45deg, #ff0000, #cc0000);
+    color: #fff;
+    }
+
+    .registration-modal, .login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    }
+
+    .modal-content {
+    background: rgba(10, 10, 10, 0.95);
+    border: 3px solid #00ffff;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    }
+
+    .modal-title {
+    font-size: 2rem;
+    color: #ffff00;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    }
+
+    .form-group {
+    margin-bottom: 20px;
+    }
+
+    .form-label {
+    display: block;
+    color: #00ffff;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    }
+
+    .form-input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ff00ff;
+    border-radius: 8px;
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    }
+
+    .form-input:focus {
+    outline: none;
+    border-color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .form-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+    }
+
+    .form-btn {
+    background: linear-gradient(45deg, #ff00ff, #cc00cc);
+    border: none;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 20px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    }
+
+    .form-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    }
+
+    .form-btn.cancel {
+    background: linear-gradient(45deg, #666, #444);
+    }
+
+    .error-message {
+    color: #ff0000;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+    }
+
+    .success-message {
+    color: #00ff00;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
     }
 
     .score-board {
@@ -307,297 +464,525 @@
     gap: 20px;
     }
 
-    .timer-display {
+    .timer-display, .user-info {
     position: relative;
     top: auto;
     right: auto;
+    left: auto;
     margin-bottom: 20px;
+    }
+
+    .auth-buttons {
+    margin-bottom: 20px;
+    }
+
+    .auth-btn {
+    display: block;
+    margin: 10px auto;
     }
     }
     </style>
 </head>
 <body>
-    <div class="timer-display">
+    <div class="timer-display hidden" id="timer-display">
         <div class="timer-label">TIME</div>
-        <div class="timer-value" id="timer">30</div>
+        <div class="timer-value" id="timer">15</div>
+    </div>
+
+    <div class="user-info hidden" id="user-info">
+        <div class="user-label">PLAYER</div>
+        <div class="user-name" id="user-name">Guest</div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="registration-modal hidden" id="registration-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">🎮 REGISTER PLAYER 🎮</h2>
+            <form id="registration-form">
+                <div class="form-group">
+                    <label class="form-label">Username:</label>
+                    <input type="text" class="form-input" id="reg-username" required minlength="3" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email:</label>
+                    <input type="email" class="form-input" id="reg-email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password:</label>
+                    <input type="password" class="form-input" id="reg-password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm Password:</label>
+                    <input type="password" class="form-input" id="reg-confirm-password" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="form-btn">REGISTER</button>
+                    <button type="button" class="form-btn cancel" onclick="closeRegistration()">CANCEL</button>
+                </div>
+                <div id="reg-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal hidden" id="login-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">🎮 LOGIN PLAYER 🎮</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label">Username or Email:</label>
+                    <input type="text" class="form-input" id="login-username" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password:</label>
+                    <input type="password" class="form-input" id="login-password" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="form-btn">LOGIN</button>
+                    <button type="button" class="form-btn cancel" onclick="closeLogin()">CANCEL</button>
+                </div>
+                <div id="login-message"></div>
+            </form>
+        </div>
     </div>
 
     <div class="container">
-    <div class="header">
-    <h1 class="title">🎵 MUSIC TRIVIA ARCADE 🎵</h1>
-    </div>
+        <div class="header">
+            <h1 class="title">🎵 MUSIC TRIVIA ARCADE 🎵</h1>
+            
+            <div class="auth-buttons" id="auth-buttons">
+                <button class="auth-btn" onclick="showRegistration()">REGISTER</button>
+                <button class="auth-btn" onclick="showLogin()">LOGIN</button>
+            </div>
 
-    <div class="score-board">
-    <div class="score-item">
-    <div class="score-label">SCORE</div>
-    <div class="score-value" id="score">0</div>
-    </div>
-    <div class="score-item">
-    <div class="score-label">QUESTION</div>
-    <div class="score-value" id="current-question">1 / 30</div>
-    </div>
-    <div class="score-item">
-    <div class="score-label">STREAK</div>
-    <div class="score-value" id="streak">0</div>
-    </div>
-    </div>
+            <div class="auth-buttons hidden" id="user-controls">
+                <button class="auth-btn logout" onclick="logout()">LOGOUT</button>
+            </div>
+        </div>
 
-    <div class="question-container" id="question-container">
-    <div class="question-header">
-    <div class="question-number" id="question-number">QUESTION 1 / 30</div>
-    <div class="category" id="category">CATEGORY: COMMON PHRASES</div>
-    </div>
-    
-    <div class="song-info">
-    <div class="song-title" id="song-title">Bohemian Rhapsody – Queen</div>
-    </div>
-    
-    <div class="question-text" id="question-text">
-    "Mama, just killed a man..." How does the song continue?
-    </div>
-    
-    <div class="answers-grid" id="answers-grid">
-    <button class="answer-btn" data-answer="A">A. Put a gun against his head</button>
-    <button class="answer-btn" data-answer="B">B. Made him spaghetti instead</button>
-    <button class="answer-btn" data-answer="C">C. Pulled my hamstring in bed</button>
-    <button class="answer-btn" data-answer="D">D. Gave him a loaf of bread</button>
-    </div>
-    </div>
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-label">SCORE</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">QUESTION</div>
+                <div class="score-value" id="current-question">1 / 30</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">STREAK</div>
+                <div class="score-value" id="streak">0</div>
+            </div>
+        </div>
 
-    <div class="controls">
-    <button class="control-btn" id="next-btn" onclick="nextQuestion()">NEXT QUESTION ▶</button>
-    <button class="control-btn" id="restart-btn" onclick="restartGame()">🔄 RESTART GAME</button>
-    </div>
+        <div class="question-container" id="question-container">
+            <div class="question-header">
+                <div class="question-number" id="question-number">QUESTION 1 / 30</div>
+                <div class="category" id="category">CATEGORY: COMMON PHRASES</div>
+            </div>
+            
+            <div class="song-info">
+                <div class="song-title" id="song-title">Bohemian Rhapsody – Queen</div>
+            </div>
+            
+            <div class="question-text" id="question-text">
+                "Mama, just killed a man..." How does the song continue?
+            </div>
+            
+            <div class="answers-grid" id="answers-grid">
+                <button class="answer-btn" data-answer="A">A. Put a gun against his head</button>
+                <button class="answer-btn" data-answer="B">B. Made him spaghetti instead</button>
+                <button class="answer-btn" data-answer="C">C. Pulled my hamstring in bed</button>
+                <button class="answer-btn" data-answer="D">D. Gave him a loaf of bread</button>
+            </div>
+        </div>
 
-    <div class="game-over hidden" id="game-over">
-    <h2>🎮 GAME OVER 🎮</h2>
-    <div class="final-score" id="final-score">Final Score: 0/30</div>
-    <p style="color: #00ffff; font-size: 1.2rem; margin-bottom: 20px;">THANKS FOR PLAYING!</p>
-    <p style="color: #ffff00; animation: blink 1.5s infinite;">🪙 INSERT COIN TO PLAY AGAIN 🪙</p>
-    </div>
+        <div class="controls">
+            <button class="control-btn" id="next-btn" onclick="nextQuestion()">NEXT QUESTION ▶</button>
+            <button class="control-btn" id="restart-btn" onclick="restartGame()">🔄 RESTART GAME</button>
+        </div>
+
+        <div class="game-over hidden" id="game-over">
+            <h2>🎮 GAME OVER 🎮</h2>
+            <div class="final-score" id="final-score">Final Score: 0/30</div>
+            <p style="color: #00ffff; font-size: 1.2rem; margin-bottom: 20px;">THANKS FOR PLAYING!</p>
+            <p style="color: #ffff00; animation: blink 1.5s infinite;">🪙 INSERT COIN TO PLAY AGAIN 🪙</p>
+        </div>
     </div>
 
     <script>
+    // User Management System
+    let currentUser = null;
+    let users = JSON.parse(localStorage.getItem('triviaUsers')) || {};
+
+    // Game Data
     const questions = [
-    {
-    song: "Bohemian Rhapsody – Queen",
-    category: "COMMON PHRASES",
-    question: '"Mama, just killed a man..." How does the song continue?',
-    answers: ["Put a gun against his head", "Made him spaghetti instead", "Pulled my hamstring in bed", "Gave him a loaf of bread"],
-    correct: 0
-    },
-    {
-    song: "I Will Always Love You – Whitney Houston",
-    category: "WHO SANG IT?",
-    question: 'Who originally wrote and performed "I Will Always Love You" before Whitney Houston\'s iconic version?',
-    answers: ["Kenny Rogers", "The ghost of Elvis", "Dolly Parton", "Reba McEntire"],
-    correct: 2
-    },
-    {
-    song: "Sweet Caroline – Neil Diamond",
-    category: "FINISH THE RHYME",
-    question: '"Sweet Caroline, good times never seemed so ____"',
-    answers: ["divine", "good", "intertwined with licorice vines", "mine"],
-    correct: 1
-    },
-    {
-    song: "Don't Stop Believin' – Journey",
-    category: "COMMON PHRASES",
-    question: '"Just a small-town girl, livin\' in a lonely world..." What is the next line?',
-    answers: ["She ordered a pizza with extra care", "She became a millionaire", "She took the midnight train going anywhere", "She knitted a sweater for a bear"],
-    correct: 2
-    },
-    {
-    song: "Billie Jean – Michael Jackson",
-    category: "WHO SANG IT?",
-    question: 'Who sang the hit song "Billie Jean"?',
-    answers: ["A very talented chimpanzee", "Michael Jackson", "Prince", "Lionel Richie"],
-    correct: 1
-    },
-    {
-    song: "We Will Rock You – Queen",
-    category: "FINISH THE RHYME",
-    question: '"We will, we will ____"',
-    answers: ["shock you", "rock you", "dock you, like a ship in view", "mock you"],
-    correct: 1
-    },
-    {
-    song: "Livin' on a Prayer – Bon Jovi",
-    category: "COMMON PHRASES",
-    question: '"Once upon a time not so long ago..." What\'s the next line?',
-    answers: ["Tommy used to work with the socks", "Tommy used to work with the fox", "Tommy used to work with the clocks", "Tommy used to work on the docks"],
-    correct: 3
-    },
-    {
-    song: "Hotel California – Eagles",
-    category: "WHO SANG IT?",
-    question: 'Which band is famous for the song "Hotel California"?',
-    answers: ["A flock of seagulls", "The Eagles", "The Doors", "Fleetwood Mac"],
-    correct: 1
-    },
-    {
-    song: "Sweet Child O' Mine – Guns N' Roses",
-    category: "FINISH THE RHYME",
-    question: '"She\'s got eyes of the bluest skies..." What\'s the next description?',
-    answers: ["As if they're filled with novocaine", "As if they're filled with pain", "As if they're filled with airplane", "As if they thought of rain"],
-    correct: 3
-    },
-    {
-    song: "Wonderwall – Oasis",
-    category: "COMMON PHRASES",
-    question: '"Today is gonna be the day that..." What?',
-    answers: ["They're gonna row it back to you", "They're gonna throw it back to you", "They're gonna mow it back to you", "They're gonna show it back to you"],
-    correct: 1
-    },
-    {
-    song: "Shape of You – Ed Sheeran",
-    category: "WHO SANG IT?",
-    question: 'Who sings the song "Shape of You"?',
-    answers: ["Sam Smith", "A very shapely robot", "Ed Sheeran", "Harry Styles"],
-    correct: 2
-    },
-    {
-    song: "Shake It Off – Taylor Swift",
-    category: "FINISH THE RHYME",
-    question: '"\'Cause the players gonna play, play, play, play, play..." What are the haters gonna do?',
-    answers: ["Haters gonna skate, skate, skate, skate, skate", "Haters gonna hate, hate, hate, hate, hate", "Haters gonna date, date, date, date, date", "Haters gonna wait, wait, wait, wait, wait"],
-    correct: 1
-    },
-    {
-    song: "Smells Like Teen Spirit – Nirvana",
-    category: "WHO SANG IT?",
-    question: 'Which band is known for the song "Smells Like Teen Spirit"?',
-    answers: ["A grungy ghost", "Chris Cornell", "Kurt Cobain", "Eddie Vedder"],
-    correct: 2
-    },
-    {
-    song: "Hey Jude – The Beatles",
-    category: "FINISH THE RHYME",
-    question: '"Hey Jude, don\'t make it bad..." What\'s the next line?',
-    answers: ["Take a sad song and make it cheddar", "Take a sad song and make it better", "Take a sad song and make it wetter", "Take a sad song and make it deader"],
-    correct: 1
-    },
-    {
-    song: "Rolling in the Deep – Adele",
-    category: "COMMON PHRASES",
-    question: '"There\'s a fire starting in my heart..." What\'s the next line?',
-    answers: ["Reaching a fever pitch and it's bringing me out the park", "Reaching a fever pitch and it's bringing me out the shark", "Reaching a fever pitch and it's bringing me out the dark", "Reaching a fever pitch and it's bringing me out the lark"],
-    correct: 2
-    },
-    {
-    song: "Thriller – Michael Jackson",
-    category: "WHO SANG IT?",
-    question: 'Who performed the iconic song and music video "Thriller"?',
-    answers: ["David Bowie", "A dancing zombie", "Prince", "Michael Jackson"],
-    correct: 3
-    },
-    {
-    song: "Imagine – John Lennon",
-    category: "COMMON PHRASES",
-    question: '"Imagine there\'s no heaven..." What\'s the next line?',
-    answers: ["It's easy if you try", "It's easy if you fry", "It's easy if you buy", "It's easy if you cry"],
-    correct: 0
-    },
-    {
-    song: "Like a Rolling Stone – Bob Dylan",
-    category: "WHO SANG IT?",
-    question: 'Who wrote and sang "Like a Rolling Stone"?',
-    answers: ["Bruce Springsteen", "Bob Dylan", "A tumbling boulder", "Neil Young"],
-    correct: 1
-    },
-    {
-    song: "Born to Run – Bruce Springsteen",
-    category: "FINISH THE RHYME",
-    question: '"In the day we sweat it out on the streets of a runaway American dream..." What\'s next?',
-    answers: ["At night we ride through the mansions of glory in tangerine machines", "At night we ride through the mansions of glory in submarine machines", "At night we ride through the mansions of glory in suicide machines", "At night we ride through the mansions of glory in caffeine machines"],
-    correct: 2
-    },
-    {
-    song: "What's Going On – Marvin Gaye",
-    category: "WHO SANG IT?",
-    question: 'Who sang the soulful protest song "What\'s Going On"?',
-    answers: ["Marvin Gaye", "A concerned citizen", "Stevie Wonder", "Otis Redding"],
-    correct: 0
-    },
-    {
-    song: "Let It Be – The Beatles",
-    category: "COMMON PHRASES",
-    question: '"When I find myself in times of trouble..." What happens next?',
-    answers: ["Mother Mary shuns me", "Mother Mary comes to me", "Mother Mary runs from me", "Mother Mary stuns me"],
-    correct: 1
-    },
-    {
-    song: "Purple Rain – Prince",
-    category: "WHO SANG IT?",
-    question: 'Who is the artist behind "Purple Rain"?',
-    answers: ["A colorful cloud", "David Bowie", "Michael Jackson", "Prince"],
-    correct: 3
-    },
-    {
-    song: "Stairway to Heaven – Led Zeppelin",
-    category: "FINISH THE RHYME",
-    question: '"There\'s a lady who\'s sure all that glitters is gold..." What\'s next?',
-    answers: ["And she's buying a stairway to leaven", "And she's buying a stairway to heaven", "And she's buying a stairway to seven", "And she's buying a stairway to Devon"],
-    correct: 1
-    },
-    {
-    song: "Back in Black – AC/DC",
-    category: "WHO SANG IT?",
-    question: 'Which band is known for the song "Back in Black"?',
-    answers: ["Guns N' Roses", "A shadowy figure", "AC/DC", "Metallica"],
-    correct: 2
-    },
-    {
-    song: "I Gotta Feeling – The Black Eyed Peas",
-    category: "COMMON PHRASES",
-    question: '"I gotta feeling that tonight\'s gonna be..." What?',
-    answers: ["A mad night", "A good night", "A bad night", "A sad night"],
-    correct: 1
-    },
-    {
-    song: "Single Ladies (Put a Ring on It) – Beyoncé",
-    category: "FINISH THE RHYME",
-    question: '"All the single ladies, all the single ladies..." What\'s the next line?',
-    answers: ["Now put your cans up", "Now put your plans up", "Now put your hands up", "Now put your pants up"],
-    correct: 2
-    },
-    {
-    song: "Every Breath You Take – The Police",
-    category: "WHO SANG IT?",
-    question: 'Which band performed "Every Breath You Take"?',
-    answers: ["The Police", "R.E.M.", "A watchful stalker", "U2"],
-    correct: 0
-    },
-    {
-    song: "Bad Romance – Lady Gaga",
-    category: "COMMON PHRASES",
-    question: '"Rah-rah-ah-ah-ah, Roma Roma-ma..." What\'s next?',
-    answers: ["Gaga, ooh ta-ta", "Gaga, ooh ha-ha", "Gaga, ooh la-la", "Gaga, ooh na-na"],
-    correct: 2
-    },
-    {
-    song: "Losing My Religion – R.E.M.",
-    category: "WHO SANG IT?",
-    question: 'Which band is known for the song "Losing My Religion"?',
-    answers: ["Radiohead", "R.E.M.", "A confused choir", "The Cure"],
-    correct: 1
-    },
-    {
-    song: "Dream On – Aerosmith",
-    category: "FINISH THE RHYME",
-    question: '"Dream on, dream on, dream on..." What\'s the next part?',
-    answers: ["Dream until your dreams come flue", "Dream until your dreams come blue", "Dream until your dreams come true", "Dream until your dreams come glue"],
-    correct: 2
-    }
+        {
+            song: "Bohemian Rhapsody – Queen",
+            category: "COMMON PHRASES",
+            question: '"Mama, just killed a man..." How does the song continue?',
+            answers: ["Put a gun against his head", "Made him spaghetti instead", "Pulled my hamstring in bed", "Gave him a loaf of bread"],
+            correct: 0
+        },
+        {
+            song: "I Will Always Love You – Whitney Houston",
+            category: "WHO SANG IT?",
+            question: 'Who originally wrote and performed "I Will Always Love You" before Whitney Houston\'s iconic version?',
+            answers: ["Kenny Rogers", "The ghost of Elvis", "Dolly Parton", "Reba McEntire"],
+            correct: 2
+        },
+        {
+            song: "Sweet Caroline – Neil Diamond",
+            category: "FINISH THE RHYME",
+            question: '"Sweet Caroline, good times never seemed so ____"',
+            answers: ["divine", "good", "intertwined with licorice vines", "mine"],
+            correct: 1
+        },
+        {
+            song: "Don't Stop Believin' – Journey",
+            category: "COMMON PHRASES",
+            question: '"Just a small-town girl, livin\' in a lonely world..." What is the next line?',
+            answers: ["She ordered a pizza with extra care", "She became a millionaire", "She took the midnight train going anywhere", "She knitted a sweater for a bear"],
+            correct: 2
+        },
+        {
+            song: "Billie Jean – Michael Jackson",
+            category: "WHO SANG IT?",
+            question: 'Who sang the hit song "Billie Jean"?',
+            answers: ["A very talented chimpanzee", "Michael Jackson", "Prince", "Lionel Richie"],
+            correct: 1
+        },
+        {
+            song: "We Will Rock You – Queen",
+            category: "FINISH THE RHYME",
+            question: '"We will, we will ____"',
+            answers: ["shock you", "rock you", "dock you, like a ship in view", "mock you"],
+            correct: 1
+        },
+        {
+            song: "Livin' on a Prayer – Bon Jovi",
+            category: "COMMON PHRASES",
+            question: '"Once upon a time not so long ago..." What\'s the next line?',
+            answers: ["Tommy used to work with the socks", "Tommy used to work with the fox", "Tommy used to work with the clocks", "Tommy used to work on the docks"],
+            correct: 3
+        },
+        {
+            song: "Hotel California – Eagles",
+            category: "WHO SANG IT?",
+            question: 'Which band is famous for the song "Hotel California"?',
+            answers: ["A flock of seagulls", "The Eagles", "The Doors", "Fleetwood Mac"],
+            correct: 1
+        },
+        {
+            song: "Sweet Child O' Mine – Guns N' Roses",
+            category: "FINISH THE RHYME",
+            question: '"She\'s got eyes of the bluest skies..." What\'s the next description?',
+            answers: ["As if they're filled with novocaine", "As if they're filled with pain", "As if they're filled with airplane", "As if they thought of rain"],
+            correct: 3
+        },
+        {
+            song: "Wonderwall – Oasis",
+            category: "COMMON PHRASES",
+            question: '"Today is gonna be the day that..." What?',
+            answers: ["They're gonna row it back to you", "They're gonna throw it back to you", "They're gonna mow it back to you", "They're gonna show it back to you"],
+            correct: 1
+        },
+        {
+            song: "Shape of You – Ed Sheeran",
+            category: "WHO SANG IT?",
+            question: 'Who sings the song "Shape of You"?',
+            answers: ["Sam Smith", "A very shapely robot", "Ed Sheeran", "Harry Styles"],
+            correct: 2
+        },
+        {
+            song: "Shake It Off – Taylor Swift",
+            category: "FINISH THE RHYME",
+            question: '"\'Cause the players gonna play, play, play, play, play..." What are the haters gonna do?',
+            answers: ["Haters gonna skate, skate, skate, skate, skate", "Haters gonna hate, hate, hate, hate, hate", "Haters gonna date, date, date, date, date", "Haters gonna wait, wait, wait, wait, wait"],
+            correct: 1
+        },
+        {
+            song: "Smells Like Teen Spirit – Nirvana",
+            category: "WHO SANG IT?",
+            question: 'Which band is known for the song "Smells Like Teen Spirit"?',
+            answers: ["A grungy ghost", "Chris Cornell", "Kurt Cobain", "Eddie Vedder"],
+            correct: 2
+        },
+        {
+            song: "Hey Jude – The Beatles",
+            category: "FINISH THE RHYME",
+            question: '"Hey Jude, don\'t make it bad..." What\'s the next line?',
+            answers: ["Take a sad song and make it cheddar", "Take a sad song and make it better", "Take a sad song and make it wetter", "Take a sad song and make it deader"],
+            correct: 1
+        },
+        {
+            song: "Rolling in the Deep – Adele",
+            category: "COMMON PHRASES",
+            question: '"There\'s a fire starting in my heart..." What\'s the next line?',
+            answers: ["Reaching a fever pitch and it's bringing me out the park", "Reaching a fever pitch and it's bringing me out the shark", "Reaching a fever pitch and it's bringing me out the dark", "Reaching a fever pitch and it's bringing me out the lark"],
+            correct: 2
+        },
+        {
+            song: "Thriller – Michael Jackson",
+            category: "WHO SANG IT?",
+            question: 'Who performed the iconic song and music video "Thriller"?',
+            answers: ["David Bowie", "A dancing zombie", "Prince", "Michael Jackson"],
+            correct: 3
+        },
+        {
+            song: "Imagine – John Lennon",
+            category: "COMMON PHRASES",
+            question: '"Imagine there\'s no heaven..." What\'s the next line?',
+            answers: ["It's easy if you try", "It's easy if you fry", "It's easy if you buy", "It's easy if you cry"],
+            correct: 0
+        },
+        {
+            song: "Like a Rolling Stone – Bob Dylan",
+            category: "WHO SANG IT?",
+            question: 'Who wrote and sang "Like a Rolling Stone"?',
+            answers: ["Bruce Springsteen", "Bob Dylan", "A tumbling boulder", "Neil Young"],
+            correct: 1
+        },
+        {
+            song: "Born to Run – Bruce Springsteen",
+            category: "FINISH THE RHYME",
+            question: '"In the day we sweat it out on the streets of a runaway American dream..." What\'s next?',
+            answers: ["At night we ride through the mansions of glory in tangerine machines", "At night we ride through the mansions of glory in submarine machines", "At night we ride through the mansions of glory in suicide machines", "At night we ride through the mansions of glory in caffeine machines"],
+            correct: 2
+        },
+        {
+            song: "What's Going On – Marvin Gaye",
+            category: "WHO SANG IT?",
+            question: 'Who sang the soulful protest song "What\'s Going On"?',
+            answers: ["Marvin Gaye", "A concerned citizen", "Stevie Wonder", "Otis Redding"],
+            correct: 0
+        },
+        {
+            song: "Let It Be – The Beatles",
+            category: "COMMON PHRASES",
+            question: '"When I find myself in times of trouble..." What happens next?',
+            answers: ["Mother Mary shuns me", "Mother Mary comes to me", "Mother Mary runs from me", "Mother Mary stuns me"],
+            correct: 1
+        },
+        {
+            song: "Purple Rain – Prince",
+            category: "WHO SANG IT?",
+            question: 'Who is the artist behind "Purple Rain"?',
+            answers: ["A colorful cloud", "David Bowie", "Michael Jackson", "Prince"],
+            correct: 3
+        },
+        {
+            song: "Stairway to Heaven – Led Zeppelin",
+            category: "FINISH THE RHYME",
+            question: '"There\'s a lady who\'s sure all that glitters is gold..." What\'s next?',
+            answers: ["And she's buying a stairway to leaven", "And she's buying a stairway to heaven", "And she's buying a stairway to seven", "And she's buying a stairway to Devon"],
+            correct: 1
+        },
+        {
+            song: "Back in Black – AC/DC",
+            category: "WHO SANG IT?",
+            question: 'Which band is known for the song "Back in Black"?',
+            answers: ["Guns N' Roses", "A shadowy figure", "AC/DC", "Metallica"],
+            correct: 2
+        },
+        {
+            song: "I Gotta Feeling – The Black Eyed Peas",
+            category: "COMMON PHRASES",
+            question: '"I gotta feeling that tonight\'s gonna be..." What?',
+            answers: ["A mad night", "A good night", "A bad night", "A sad night"],
+            correct: 1
+        },
+        {
+            song: "Single Ladies (Put a Ring on It) – Beyoncé",
+            category: "FINISH THE RHYME",
+            question: '"All the single ladies, all the single ladies..." What\'s the next line?',
+            answers: ["Now put your cans up", "Now put your plans up", "Now put your hands up", "Now put your pants up"],
+            correct: 2
+        },
+        {
+            song: "Every Breath You Take – The Police",
+            category: "WHO SANG IT?",
+            question: 'Which band performed "Every Breath You Take"?',
+            answers: ["The Police", "R.E.M.", "A watchful stalker", "U2"],
+            correct: 0
+        },
+        {
+            song: "Bad Romance – Lady Gaga",
+            category: "COMMON PHRASES",
+            question: '"Rah-rah-ah-ah-ah, Roma Roma-ma..." What\'s next?',
+            answers: ["Gaga, ooh ta-ta", "Gaga, ooh ha-ha", "Gaga, ooh la-la", "Gaga, ooh na-na"],
+            correct: 2
+        },
+        {
+            song: "Losing My Religion – R.E.M.",
+            category: "WHO SANG IT?",
+            question: 'Which band is known for the song "Losing My Religion"?',
+            answers: ["Radiohead", "R.E.M.", "A confused choir", "The Cure"],
+            correct: 1
+        },
+        {
+            song: "Dream On – Aerosmith",
+            category: "FINISH THE RHYME",
+            question: '"Dream on, dream on, dream on..." What\'s the next part?',
+            answers: ["Dream until your dreams come flue", "Dream until your dreams come blue", "Dream until your dreams come true", "Dream until your dreams come glue"],
+            correct: 2
+        }
     ];
 
+    // Game Variables
     let currentQuestionIndex = 0;
     let score = 0;
     let streak = 0;
     let gameEnded = false;
-    let timeLeft = 30;
+    let timeLeft = 15;
     let timer;
 
+    // Authentication Functions
+    function showRegistration() {
+        document.getElementById('registration-modal').classList.remove('hidden');
+    }
+
+    function closeRegistration() {
+        document.getElementById('registration-modal').classList.add('hidden');
+        clearForm('registration-form');
+    }
+
+    function showLogin() {
+        document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    function closeLogin() {
+        document.getElementById('login-modal').classList.add('hidden');
+        clearForm('login-form');
+    }
+
+    function clearForm(formId) {
+        document.getElementById(formId).reset();
+        const messageDiv = document.querySelector(`#${formId} + div`);
+        if (messageDiv) messageDiv.innerHTML = '';
+    }
+
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function showMessage(elementId, message, isError = true) {
+        const element = document.getElementById(elementId);
+        element.innerHTML = message;
+        element.className = isError ? 'error-message' : 'success-message';
+    }
+
+    // Registration Form Handler
+    document.getElementById('registration-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('reg-username').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+        // Validation
+        if (username.length < 3) {
+            showMessage('reg-message', 'Username must be at least 3 characters long');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            showMessage('reg-message', 'Please enter a valid email address');
+            return;
+        }
+
+        if (password.length < 6) {
+            showMessage('reg-message', 'Password must be at least 6 characters long');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showMessage('reg-message', 'Passwords do not match');
+            return;
+        }
+
+        // Check if user already exists
+        if (users[username] || Object.values(users).some(user => user.email === email)) {
+            showMessage('reg-message', 'Username or email already exists');
+            return;
+        }
+
+        // Create new user
+        users[username] = {
+            username: username,
+            email: email,
+            password: password, // In real app, this should be hashed
+            registrationDate: new Date().toISOString(),
+            highScore: 0,
+            gamesPlayed: 0
+        };
+
+        // Save to localStorage
+        localStorage.setItem('triviaUsers', JSON.stringify(users));
+
+        showMessage('reg-message', 'Registration successful! You can now login.', false);
+        
+        setTimeout(() => {
+            closeRegistration();
+            showLogin();
+        }, 2000);
+    });
+
+    // Login Form Handler
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const usernameOrEmail = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        // Find user by username or email
+        let user = users[usernameOrEmail];
+        if (!user) {
+            user = Object.values(users).find(u => u.email === usernameOrEmail);
+        }
+
+        if (!user || user.password !== password) {
+            showMessage('login-message', 'Invalid username/email or password');
+            return;
+        }
+
+        // Login successful
+        currentUser = user;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        
+        showMessage('login-message', 'Login successful!', false);
+        
+        setTimeout(() => {
+            closeLogin();
+            updateUserInterface();
+        }, 1000);
+    });
+
+    function updateUserInterface() {
+        if (currentUser) {
+            document.getElementById('auth-buttons').classList.add('hidden');
+            document.getElementById('user-controls').classList.remove('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('timer-display').classList.remove('hidden');
+            document.getElementById('user-name').textContent = currentUser.username;
+        } else {
+            document.getElementById('auth-buttons').classList.remove('hidden');
+            document.getElementById('user-controls').classList.add('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+            document.getElementById('timer-display').classList.add('hidden');
+        }
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('currentUser');
+        updateUserInterface();
+        restartGame();
+    }
+
+    // Timer Functions
     function startTimer() {
         timer = setInterval(() => {
             timeLeft--;
@@ -605,7 +990,6 @@
             
             if (timeLeft <= 0) {
                 clearInterval(timer);
-                // Auto-advance to next question when time runs out
                 nextQuestion();
             }
         }, 1000);
@@ -613,138 +997,165 @@
 
     function resetTimer() {
         clearInterval(timer);
-        timeLeft = 30;
+        timeLeft = 15;
         document.getElementById('timer').textContent = timeLeft;
-        startTimer();
+        if (currentUser) {
+            startTimer();
+        }
     }
 
+    // Game Functions
     function loadQuestion() {
-    if (currentQuestionIndex >= questions.length) {
-    endGame();
-    return;
-    }
+        if (currentQuestionIndex >= questions.length) {
+            endGame();
+            return;
+        }
 
-    const question = questions[currentQuestionIndex];
-    
-    document.getElementById('question-number').textContent = `QUESTION ${currentQuestionIndex + 1} / 30`;
-    document.getElementById('current-question').textContent = `${currentQuestionIndex + 1} / 30`;
-    document.getElementById('category').textContent = `CATEGORY: ${question.category}`;
-    document.getElementById('song-title').textContent = question.song;
-    document.getElementById('question-text').textContent = question.question;
-    
-    const answersGrid = document.getElementById('answers-grid');
-    answersGrid.innerHTML = '';
-    
-    question.answers.forEach((answer, index) => {
-    const button = document.createElement('button');
-    button.className = 'answer-btn';
-    button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
-    button.dataset.answer = String.fromCharCode(65 + index);
-    button.onclick = () => selectAnswer(button.dataset.answer);
-    answersGrid.appendChild(button);
-    });
+        const question = questions[currentQuestionIndex];
+        
+        document.getElementById('question-number').textContent = `QUESTION ${currentQuestionIndex + 1} / 30`;
+        document.getElementById('current-question').textContent = `${currentQuestionIndex + 1} / 30`;
+        document.getElementById('category').textContent = `CATEGORY: ${question.category}`;
+        document.getElementById('song-title').textContent = question.song;
+        document.getElementById('question-text').textContent = question.question;
+        
+        const answersGrid = document.getElementById('answers-grid');
+        answersGrid.innerHTML = '';
+        
+        question.answers.forEach((answer, index) => {
+            const button = document.createElement('button');
+            button.className = 'answer-btn';
+            button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
+            button.dataset.answer = String.fromCharCode(65 + index);
+            button.onclick = () => selectAnswer(button.dataset.answer);
+            answersGrid.appendChild(button);
+        });
 
-    resetTimer();
+        resetTimer();
     }
 
     function selectAnswer(selectedAnswer) {
-    if (gameEnded) return;
-    
-    clearInterval(timer);
-    
-    const question = questions[currentQuestionIndex];
-    const buttons = document.querySelectorAll('.answer-btn');
-    const selectedIndex = selectedAnswer.charCodeAt(0) - 65;
-    
-    buttons.forEach((button, index) => {
-    button.disabled = true;
-    if (index === question.correct) {
-    button.classList.add('correct');
-    } else if (index === selectedIndex && selectedIndex !== question.correct) {
-    button.classList.add('incorrect');
-    }
-    });
-    
-    if (selectedIndex === question.correct) {
-    score += 10;
-    streak++;
-    createConfetti();
-    } else {
-    streak = 0;
-    }
-    
-    updateScore();
-    
-    setTimeout(() => {
-    buttons.forEach(button => {
-    button.classList.remove('correct', 'incorrect');
-    button.disabled = false;
-    });
-    }, 2000);
+        if (gameEnded) return;
+        
+        clearInterval(timer);
+        
+        const question = questions[currentQuestionIndex];
+        const buttons = document.querySelectorAll('.answer-btn');
+        const selectedIndex = selectedAnswer.charCodeAt(0) - 65;
+        
+        buttons.forEach((button, index) => {
+            button.disabled = true;
+            if (index === question.correct) {
+                button.classList.add('correct');
+            } else if (index === selectedIndex && selectedIndex !== question.correct) {
+                button.classList.add('incorrect');
+            }
+        });
+        
+        if (selectedIndex === question.correct) {
+            score += 10;
+            streak++;
+            createConfetti();
+        } else {
+            streak = 0;
+        }
+        
+        updateScore();
+        
+        setTimeout(() => {
+            buttons.forEach(button => {
+                button.classList.remove('correct', 'incorrect');
+                button.disabled = false;
+            });
+        }, 2000);
     }
 
     function nextQuestion() {
-    currentQuestionIndex++;
-    loadQuestion();
+        currentQuestionIndex++;
+        loadQuestion();
     }
 
     function updateScore() {
-    document.getElementById('score').textContent = score;
-    document.getElementById('streak').textContent = streak;
+        document.getElementById('score').textContent = score;
+        document.getElementById('streak').textContent = streak;
     }
 
     function endGame() {
-    gameEnded = true;
-    clearInterval(timer);
-    document.getElementById('question-container').classList.add('hidden');
-    document.getElementById('game-over').classList.remove('hidden');
-    document.getElementById('final-score').textContent = `Final Score: ${score}/300 (${currentQuestionIndex}/30 questions)`;
+        gameEnded = true;
+        clearInterval(timer);
+        
+        // Update user stats if logged in
+        if (currentUser) {
+            currentUser.gamesPlayed++;
+            if (score > currentUser.highScore) {
+                currentUser.highScore = score;
+            }
+            users[currentUser.username] = currentUser;
+            localStorage.setItem('triviaUsers', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+        
+        document.getElementById('question-container').classList.add('hidden');
+        document.getElementById('game-over').classList.remove('hidden');
+        document.getElementById('final-score').textContent = `Final Score: ${score}/300 (${currentQuestionIndex}/30 questions)`;
     }
 
     function restartGame() {
-    currentQuestionIndex = 0;
-    score = 0;
-    streak = 0;
-    gameEnded = false;
-    
-    document.getElementById('question-container').classList.remove('hidden');
-    document.getElementById('game-over').classList.add('hidden');
-    
-    updateScore();
-    loadQuestion();
+        currentQuestionIndex = 0;
+        score = 0;
+        streak = 0;
+        gameEnded = false;
+        
+        document.getElementById('question-container').classList.remove('hidden');
+        document.getElementById('game-over').classList.add('hidden');
+        
+        updateScore();
+        loadQuestion();
     }
 
     function createConfetti() {
-    const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00', '#ff0000'];
-    
-    for (let i = 0; i < 50; i++) {
-    const confetti = document.createElement('div');
-    confetti.style.position = 'fixed';
-    confetti.style.left = Math.random() * 100 + 'vw';
-    confetti.style.top = '-10px';
-    confetti.style.width = '10px';
-    confetti.style.height = '10px';
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.pointerEvents = 'none';
-    confetti.style.zIndex = '1000';
-    confetti.style.borderRadius = '50%';
-    
-    document.body.appendChild(confetti);
-    
-    const animation = confetti.animate([
-    { transform: 'translateY(-10px) rotate(0deg)', opacity: 1 },
-    { transform: `translateY(100vh) rotate(720deg)`, opacity: 0 }
-    ], {
-    duration: 3000,
-    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-    });
-    
-    animation.onfinish = () => confetti.remove();
-    }
+        const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00', '#ff0000'];
+        
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '1000';
+            confetti.style.borderRadius = '50%';
+            
+            document.body.appendChild(confetti);
+            
+            const animation = confetti.animate([
+                { transform: 'translateY(-10px) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(100vh) rotate(720deg)`, opacity: 0 }
+            ], {
+                duration: 3000,
+                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            });
+            
+            animation.onfinish = () => confetti.remove();
+        }
     }
 
-    // Initialize the game
-    loadQuestion();
+    // Initialize the application
+    function init() {
+        // Check if user is already logged in
+        const savedUser = localStorage.getItem('currentUser');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+        }
+        
+        updateUserInterface();
+        loadQuestion();
+    }
+
+    // Start the game
+    init();
     </script>
 </body>
 </html>
