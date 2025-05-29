@@ -56,31 +56,6 @@
     color: #ffff00;
     }
 
-    .user-info {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: rgba(0, 255, 255, 0.1);
-    border: 2px solid #00ffff;
-    border-radius: 10px;
-    padding: 15px 25px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-    z-index: 1000;
-    }
-
-    .user-label {
-    font-size: 0.8rem;
-    color: #ff00ff;
-    margin-bottom: 5px;
-    }
-
-    .user-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffff00;
-    }
-
     .header {
     text-align: center;
     margin-bottom: 40px;
@@ -97,138 +72,6 @@
     animation: neonGlow 2s ease-in-out infinite alternate, gradientShift 3s ease-in-out infinite;
     text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
     margin-bottom: 20px;
-    }
-
-    .auth-buttons {
-    text-align: center;
-    margin-bottom: 30px;
-    }
-
-    .auth-btn {
-    background: linear-gradient(45deg, #00ffff, #0099cc);
-    border: none;
-    color: #000;
-    padding: 12px 25px;
-    margin: 0 10px;
-    border-radius: 20px;
-    font-family: 'Orbitron', monospace;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-    }
-
-    .auth-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-    }
-
-    .auth-btn.logout {
-    background: linear-gradient(45deg, #ff0000, #cc0000);
-    color: #fff;
-    }
-
-    .registration-modal, .login-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    }
-
-    .modal-content {
-    background: rgba(10, 10, 10, 0.95);
-    border: 3px solid #00ffff;
-    border-radius: 15px;
-    padding: 40px;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-    }
-
-    .modal-title {
-    font-size: 2rem;
-    color: #ffff00;
-    text-align: center;
-    margin-bottom: 30px;
-    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
-    }
-
-    .form-group {
-    margin-bottom: 20px;
-    }
-
-    .form-label {
-    display: block;
-    color: #00ffff;
-    margin-bottom: 8px;
-    font-size: 1rem;
-    }
-
-    .form-input {
-    width: 100%;
-    padding: 12px 15px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 2px solid #ff00ff;
-    border-radius: 8px;
-    color: #00ffff;
-    font-family: 'Orbitron', monospace;
-    font-size: 1rem;
-    }
-
-    .form-input:focus {
-    outline: none;
-    border-color: #00ffff;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
-
-    .form-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 30px;
-    }
-
-    .form-btn {
-    background: linear-gradient(45deg, #ff00ff, #cc00cc);
-    border: none;
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 20px;
-    font-family: 'Orbitron', monospace;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    }
-
-    .form-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-    }
-
-    .form-btn.cancel {
-    background: linear-gradient(45deg, #666, #444);
-    }
-
-    .error-message {
-    color: #ff0000;
-    font-size: 0.9rem;
-    margin-top: 10px;
-    text-align: center;
-    }
-
-    .success-message {
-    color: #00ff00;
-    font-size: 0.9rem;
-    margin-top: 10px;
-    text-align: center;
     }
 
     .score-board {
@@ -361,6 +204,32 @@
     margin-top: 30px;
     }
 
+    .start-btn {
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+    border: none;
+    color: #000;
+    padding: 20px 40px;
+    margin: 0 10px;
+    border-radius: 25px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    animation: startPulse 2s ease-in-out infinite;
+    }
+
+    .start-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+    }
+
+    @keyframes startPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.4); }
+    50% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.8); }
+    }
+
     .control-btn {
     background: linear-gradient(45deg, #ff00ff, #cc00cc);
     border: none;
@@ -464,100 +333,24 @@
     gap: 20px;
     }
 
-    .timer-display, .user-info {
+    .timer-display {
     position: relative;
     top: auto;
     right: auto;
-    left: auto;
     margin-bottom: 20px;
-    }
-
-    .auth-buttons {
-    margin-bottom: 20px;
-    }
-
-    .auth-btn {
-    display: block;
-    margin: 10px auto;
     }
     }
     </style>
 </head>
 <body>
-    <div class="timer-display hidden" id="timer-display">
+    <div class="timer-display" id="timer-display">
         <div class="timer-label">TIME</div>
         <div class="timer-value" id="timer">15</div>
-    </div>
-
-    <div class="user-info hidden" id="user-info">
-        <div class="user-label">PLAYER</div>
-        <div class="user-name" id="user-name">Guest</div>
-    </div>
-
-    <!-- Registration Modal -->
-    <div class="registration-modal hidden" id="registration-modal">
-        <div class="modal-content">
-            <h2 class="modal-title">🎮 REGISTER PLAYER 🎮</h2>
-            <form id="registration-form">
-                <div class="form-group">
-                    <label class="form-label">Username:</label>
-                    <input type="text" class="form-input" id="reg-username" required minlength="3" maxlength="20">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email:</label>
-                    <input type="email" class="form-input" id="reg-email" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Password:</label>
-                    <input type="password" class="form-input" id="reg-password" required minlength="6">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Confirm Password:</label>
-                    <input type="password" class="form-input" id="reg-confirm-password" required>
-                </div>
-                <div class="form-buttons">
-                    <button type="submit" class="form-btn">REGISTER</button>
-                    <button type="button" class="form-btn cancel" onclick="closeRegistration()">CANCEL</button>
-                </div>
-                <div id="reg-message"></div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Login Modal -->
-    <div class="login-modal hidden" id="login-modal">
-        <div class="modal-content">
-            <h2 class="modal-title">🎮 LOGIN PLAYER 🎮</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label class="form-label">Username or Email:</label>
-                    <input type="text" class="form-input" id="login-username" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Password:</label>
-                    <input type="password" class="form-input" id="login-password" required>
-                </div>
-                <div class="form-buttons">
-                    <button type="submit" class="form-btn">LOGIN</button>
-                    <button type="button" class="form-btn cancel" onclick="closeLogin()">CANCEL</button>
-                </div>
-                <div id="login-message"></div>
-            </form>
-        </div>
     </div>
 
     <div class="container">
         <div class="header">
             <h1 class="title">🎵 MUSIC TRIVIA ARCADE 🎵</h1>
-            
-            <div class="auth-buttons" id="auth-buttons">
-                <button class="auth-btn" onclick="showRegistration()">REGISTER</button>
-                <button class="auth-btn" onclick="showLogin()">LOGIN</button>
-            </div>
-
-            <div class="auth-buttons hidden" id="user-controls">
-                <button class="auth-btn logout" onclick="logout()">LOGOUT</button>
-            </div>
         </div>
 
         <div class="score-board">
@@ -598,7 +391,8 @@
         </div>
 
         <div class="controls">
-            <button class="control-btn" id="next-btn" onclick="nextQuestion()">NEXT QUESTION ▶</button>
+            <button class="start-btn" id="start-btn" onclick="startGame()">🚀 START GAME 🚀</button>
+            <button class="control-btn hidden" id="next-btn" onclick="nextQuestion()">NEXT QUESTION ▶</button>
             <button class="control-btn" id="restart-btn" onclick="restartGame()">🔄 RESTART GAME</button>
         </div>
 
@@ -611,10 +405,6 @@
     </div>
 
     <script>
-    // User Management System
-    let currentUser = null;
-    let users = JSON.parse(localStorage.getItem('triviaUsers')) || {};
-
     // Game Data
     const questions = [
         {
@@ -834,153 +624,9 @@
     let score = 0;
     let streak = 0;
     let gameEnded = false;
+    let gameStarted = false;
     let timeLeft = 15;
     let timer;
-
-    // Authentication Functions
-    function showRegistration() {
-        document.getElementById('registration-modal').classList.remove('hidden');
-    }
-
-    function closeRegistration() {
-        document.getElementById('registration-modal').classList.add('hidden');
-        clearForm('registration-form');
-    }
-
-    function showLogin() {
-        document.getElementById('login-modal').classList.remove('hidden');
-    }
-
-    function closeLogin() {
-        document.getElementById('login-modal').classList.add('hidden');
-        clearForm('login-form');
-    }
-
-    function clearForm(formId) {
-        document.getElementById(formId).reset();
-        const messageDiv = document.querySelector(`#${formId} + div`);
-        if (messageDiv) messageDiv.innerHTML = '';
-    }
-
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function showMessage(elementId, message, isError = true) {
-        const element = document.getElementById(elementId);
-        element.innerHTML = message;
-        element.className = isError ? 'error-message' : 'success-message';
-    }
-
-    // Registration Form Handler
-    document.getElementById('registration-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const username = document.getElementById('reg-username').value.trim();
-        const email = document.getElementById('reg-email').value.trim();
-        const password = document.getElementById('reg-password').value;
-        const confirmPassword = document.getElementById('reg-confirm-password').value;
-
-        // Validation
-        if (username.length < 3) {
-            showMessage('reg-message', 'Username must be at least 3 characters long');
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            showMessage('reg-message', 'Please enter a valid email address');
-            return;
-        }
-
-        if (password.length < 6) {
-            showMessage('reg-message', 'Password must be at least 6 characters long');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            showMessage('reg-message', 'Passwords do not match');
-            return;
-        }
-
-        // Check if user already exists
-        if (users[username] || Object.values(users).some(user => user.email === email)) {
-            showMessage('reg-message', 'Username or email already exists');
-            return;
-        }
-
-        // Create new user
-        users[username] = {
-            username: username,
-            email: email,
-            password: password, // In real app, this should be hashed
-            registrationDate: new Date().toISOString(),
-            highScore: 0,
-            gamesPlayed: 0
-        };
-
-        // Save to localStorage
-        localStorage.setItem('triviaUsers', JSON.stringify(users));
-
-        showMessage('reg-message', 'Registration successful! You can now login.', false);
-        
-        setTimeout(() => {
-            closeRegistration();
-            showLogin();
-        }, 2000);
-    });
-
-    // Login Form Handler
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const usernameOrEmail = document.getElementById('login-username').value.trim();
-        const password = document.getElementById('login-password').value;
-
-        // Find user by username or email
-        let user = users[usernameOrEmail];
-        if (!user) {
-            user = Object.values(users).find(u => u.email === usernameOrEmail);
-        }
-
-        if (!user || user.password !== password) {
-            showMessage('login-message', 'Invalid username/email or password');
-            return;
-        }
-
-        // Login successful
-        currentUser = user;
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        
-        showMessage('login-message', 'Login successful!', false);
-        
-        setTimeout(() => {
-            closeLogin();
-            updateUserInterface();
-        }, 1000);
-    });
-
-    function updateUserInterface() {
-        if (currentUser) {
-            document.getElementById('auth-buttons').classList.add('hidden');
-            document.getElementById('user-controls').classList.remove('hidden');
-            document.getElementById('user-info').classList.remove('hidden');
-            document.getElementById('timer-display').classList.remove('hidden');
-            document.getElementById('user-name').textContent = currentUser.username;
-        } else {
-            document.getElementById('auth-buttons').classList.remove('hidden');
-            document.getElementById('user-controls').classList.add('hidden');
-            document.getElementById('user-info').classList.add('hidden');
-            document.getElementById('timer-display').classList.add('hidden');
-        }
-    }
-
-    function logout() {
-        currentUser = null;
-        localStorage.removeItem('currentUser');
-        updateUserInterface();
-        restartGame();
-    }
 
     // Timer Functions
     function startTimer() {
@@ -999,12 +645,32 @@
         clearInterval(timer);
         timeLeft = 15;
         document.getElementById('timer').textContent = timeLeft;
-        if (currentUser) {
+        if (gameStarted) {
             startTimer();
         }
     }
 
     // Game Functions
+    function startGame() {
+        gameStarted = true;
+        gameEnded = false;
+        
+        // Hide start button, show next button
+        document.getElementById('start-btn').classList.add('hidden');
+        document.getElementById('next-btn').classList.remove('hidden');
+        
+        // Enable answer buttons
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        answerButtons.forEach(button => {
+            button.disabled = false;
+            button.style.opacity = '1';
+            button.style.cursor = 'pointer';
+        });
+        
+        // Start the timer
+        startTimer();
+    }
+
     function loadQuestion() {
         if (currentQuestionIndex >= questions.length) {
             endGame();
@@ -1028,6 +694,14 @@
             button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
             button.dataset.answer = String.fromCharCode(65 + index);
             button.onclick = () => selectAnswer(button.dataset.answer);
+            
+            // Disable buttons if game hasn't started
+            if (!gameStarted) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+            
             answersGrid.appendChild(button);
         });
 
@@ -1035,7 +709,7 @@
     }
 
     function selectAnswer(selectedAnswer) {
-        if (gameEnded) return;
+        if (gameEnded || !gameStarted) return;
         
         clearInterval(timer);
         
@@ -1082,22 +756,17 @@
 
     function endGame() {
         gameEnded = true;
+        gameStarted = false;
         clearInterval(timer);
-        
-        // Update user stats if logged in
-        if (currentUser) {
-            currentUser.gamesPlayed++;
-            if (score > currentUser.highScore) {
-                currentUser.highScore = score;
-            }
-            users[currentUser.username] = currentUser;
-            localStorage.setItem('triviaUsers', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        }
         
         document.getElementById('question-container').classList.add('hidden');
         document.getElementById('game-over').classList.remove('hidden');
         document.getElementById('final-score').textContent = `Final Score: ${score}/300 (${currentQuestionIndex}/30 questions)`;
+        
+        // Hide next button, show start button for restart
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('start-btn').classList.remove('hidden');
+        document.getElementById('start-btn').textContent = '🚀 PLAY AGAIN 🚀';
     }
 
     function restartGame() {
@@ -1105,9 +774,15 @@
         score = 0;
         streak = 0;
         gameEnded = false;
+        gameStarted = false;
         
         document.getElementById('question-container').classList.remove('hidden');
         document.getElementById('game-over').classList.add('hidden');
+        
+        // Reset buttons
+        document.getElementById('start-btn').classList.remove('hidden');
+        document.getElementById('start-btn').textContent = '🚀 START GAME 🚀';
+        document.getElementById('next-btn').classList.add('hidden');
         
         updateScore();
         loadQuestion();
@@ -1142,15 +817,8 @@
         }
     }
 
-    // Initialize the application
+    // Initialize the game
     function init() {
-        // Check if user is already logged in
-        const savedUser = localStorage.getItem('currentUser');
-        if (savedUser) {
-            currentUser = JSON.parse(savedUser);
-        }
-        
-        updateUserInterface();
         loadQuestion();
     }
 
