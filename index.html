@@ -628,18 +628,18 @@
     let timeLeft = 15;
     let timer;
 
-    // Timer Functions
-    function startTimer() {
-        timer = setInterval(() => {
-            timeLeft--;
-            document.getElementById('timer').textContent = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                nextQuestion();
-            }
-        }, 1000);
-    }
+ // Timer Functions
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            // nextQuestion();  <-- Removed the call to nextQuestion()
+        }
+    }, 1000);
+}
 
     function resetTimer() {
         clearInterval(timer);
