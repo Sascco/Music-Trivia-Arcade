@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Trivia Arcade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #0a0a0a;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #00ffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGlow 2s ease-in-out infinite alternate, gradientShift 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #ffff00;
+            animation: blink 1.5s infinite;
+            margin-bottom: 30px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            background: rgba(255, 0, 255, 0.1);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            padding: 15px 25px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffff00;
+        }
+
+        .question-container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            color: #ff00ff;
+            font-weight: bold;
+        }
+
+        .category {
+            background: linear-gradient(45deg, #ff00ff, #ffff00);
+            color: #000;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .song-title {
+            font-size: 1.8rem;
+            color: #ffff00;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: #00ffff;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .answer-btn {
+            background: linear-gradient(45deg, #1a1a1a, #333);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-btn:hover {
+            background: linear-gradient(45deg, #00ffff, #0099cc);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            border-color: #00ff00;
+            color: #000;
+            animation: correctPulse 0.5s ease-in-out;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            border-color: #ff0000;
+            color: #fff;
+            animation: incorrectShake 0.5s ease-in-out;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #ff00ff, #cc00cc);
+            border: none;
+            color: #fff;
+            padding: 15px 30px;
+            margin: 0 10px;
+            border-radius: 25px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .control-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.5);
+        }
+
+        .game-over {
+            text-align: center;
+            padding: 50px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 3px solid #ff0000;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .game-over h2 {
+            font-size: 3rem;
+            color: #ff0000;
+            margin-bottom: 20px;
+            animation: glitch 1s infinite;
+        }
+
+        .final-score {
+            font-size: 2rem;
+            color: #ffff00;
+            margin-bottom: 30px;
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-board {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎵 MUSIC TRIVIA ARCADE 🎵</h1>
+            <p class="subtitle">🎮 PRESS START TO PLAY! 🎮</p>
+        </div>
+
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-label">SCORE</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">QUESTION</div>
+                <div class="score-value" id="current-question">1 / 30</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">STREAK</div>
+                <div class="score-value" id="streak">0</div>
+            </div>
+        </div>
+
+        <div class="question-container" id="question-container">
+            <div class="question-header">
+                <div class="question-number" id="question-number">QUESTION 1 / 30</div>
+                <div class="category" id="category">CATEGORY: COMMON PHRASES</div>
+            </div>
+            
+            <div class="song-info">
+                <div class="song-title" id="song-title">Bohemian Rhapsody – Queen</div>
+            </div>
+            
+            <div class="question-text" id="question-text">
+                "Mama, just killed a man..." How does the song continue?
+            </div>
+            
+            <div class="answers-grid" id="answers-grid">
+                <button class="answer-btn" data-answer="A">A. Put a gun against his head</button>
+                <button class="answer-btn" data-answer="B">B. Made him spaghetti instead</button>
+                <button class="answer-btn" data-answer="C">C. Pulled my hamstring in bed</button>
+                <button class="answer-btn" data-answer="D">D. Gave him a loaf of bread</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="next-btn" onclick="nextQuestion()">NEXT QUESTION ▶</button>
+            <button class="control-btn" id="restart-btn" onclick="restartGame()">🔄 RESTART GAME</button>
+        </div>
+
+        <div class="game-over hidden" id="game-over">
+            <h2>🎮 GAME OVER 🎮</h2>
+            <div class="final-score" id="final-score">Final Score: 0/30</div>
+            <p style="color: #00ffff; font-size: 1.2rem; margin-bottom: 20px;">THANKS FOR PLAYING!</p>
+            <p style="color: #ffff00; animation: blink 1.5s infinite;">🪙 INSERT COIN TO PLAY AGAIN 🪙</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                song: "Bohemian Rhapsody – Queen",
+                category: "COMMON PHRASES",
+                question: '"Mama, just killed a man..." How does the song continue?',
+                answers: ["A. Put a gun against his head", "B. Made him spaghetti instead", "C. Pulled my hamstring in bed", "D. Gave him a loaf of bread"],
+                correct: "A"
+            },
+            {
+                song: "I Will Always Love You – Whitney Houston",
+                category: "WHO SANG IT?",
+                question: 'Who originally wrote and performed "I Will Always Love You" before Whitney Houston\'s iconic version?',
+                answers: ["A. Dolly Parton", "B. Kenny Rogers", "C. Reba McEntire", "D. The ghost of Elvis"],
+                correct: "A"
+            },
+            {
+                song: "Sweet Caroline – Neil Diamond",
+                category: "FINISH THE RHYME",
+                question: '"Sweet Caroline, good times never seemed so ____"',
+                answers: ["A. fine", "B. divine", "C. mine", "D. intertwined with licorice vines"],
+                correct: "A"
+            },
+            {
+                song: "Don't Stop Believin' – Journey",
+                category: "COMMON PHRASES",
+                question: '"Just a small-town girl, livin\' in a lonely world..." What is the next line?',
+                answers: ["A. She took the midnight train going anywhere", "B. She ordered a pizza with extra care", "C. She knitted a sweater for a bear", "D. She became a millionaire"],
+                correct: "A"
+            },
+            {
+                song: "Billie Jean – Michael Jackson",
+                category: "WHO SANG IT?",
+                question: 'Who sang the hit song "Billie Jean"?',
+                answers: ["A. Prince", "B. Michael Jackson", "C. Lionel Richie", "D. A very talented chimpanzee"],
+                correct: "B"
+            },
+            {
+                song: "We Will Rock You – Queen",
+                category: "FINISH THE RHYME",
+                question: '"We will, we will ____"',
+                answers: ["A. rock you", "B. shock you", "C. mock you", "D. dock you, like a ship in view"],
+                correct: "A"
+            },
+            {
+                song: "Livin' on a Prayer – Bon Jovi",
+                category: "COMMON PHRASES",
+                question: '"Once upon a time not so long ago..." What\'s the next line?',
+                answers: ["A. Tommy used to work on the docks", "B. Tommy used to work with the fox", "C. Tommy used to work with the clocks", "D. Tommy used to work with the socks"],
+                correct: "A"
+            },
+            {
+                song: "Hotel California – Eagles",
+                category: "WHO SANG IT?",
+                question: 'Which band is famous for the song "Hotel California"?',
+                answers: ["A. The Doors", "B. The Eagles", "C. Fleetwood Mac", "D. A flock of seagulls"],
+                correct: "B"
+            },
+            {
+                song: "Sweet Child O' Mine – Guns N' Roses",
+                category: "FINISH THE RHYME",
+                question: '"She\'s got eyes of the bluest skies..." What\'s the next description?',
+                answers: ["A. As if they thought of rain", "B. As if they're filled with pain", "C. As if they're filled with novocaine", "D. As if they're filled with airplane"],
+                correct: "A"
+            },
+            {
+                song: "Wonderwall – Oasis",
+                category: "COMMON PHRASES",
+                question: '"Today is gonna be the day that..." What?',
+                answers: ["A. They're gonna throw it back to you", "B. They're gonna show it back to you", "C. They're gonna mow it back to you", "D. They're gonna row it back to you"],
+                correct: "A"
+            },
+            {
+                song: "Shape of You – Ed Sheeran",
+                category: "WHO SANG IT?",
+                question: 'Who sings the song "Shape of You"?',
+                answers: ["A. Sam Smith", "B. Ed Sheeran", "C. Harry Styles", "D. A very shapely robot"],
+                correct: "B"
+            },
+            {
+                song: "Shake It Off – Taylor Swift",
+                category: "FINISH THE RHYME",
+                question: '"\'Cause the players gonna play, play, play, play, play..." What are the haters gonna do?',
+                answers: ["A. Haters gonna hate, hate, hate, hate, hate", "B. Haters gonna date, date, date, date, date", "C. Haters gonna wait, wait, wait, wait, wait", "D. Haters gonna skate, skate, skate, skate, skate"],
+                correct: "A"
+            },
+            {
+                song: "Smells Like Teen Spirit – Nirvana",
+                category: "WHO SANG IT?",
+                question: 'Who is the lead singer of the band that performed "Smells Like Teen Spirit"?',
+                answers: ["A. Kurt Cobain", "B. Eddie Vedder", "C. Chris Cornell", "D. A grungy ghost"],
+                correct: "A"
+            },
+            {
+                song: "Hey Jude – The Beatles",
+                category: "FINISH THE RHYME",
+                question: '"Hey Jude, don\'t make it bad..." What\'s the next line?',
+                answers: ["A. Take a sad song and make it better", "B. Take a sad song and make it wetter", "C. Take a sad song and make it deader", "D. Take a sad song and make it cheddar"],
+                correct: "A"
+            },
+            {
+                song: "Rolling in the Deep – Adele",
+                category: "COMMON PHRASES",
+                question: '"There\'s a fire starting in my heart..." What\'s the next line?',
+                answers: ["A. Reaching a fever pitch and it's bringing me out the dark", "B. Reaching a fever pitch and it's bringing me out the park", "C. Reaching a fever pitch and it's bringing me out the lark", "D. Reaching a fever pitch and it's bringing me out the shark"],
+                correct: "A"
+            },
+            {
+                song: "Thriller – Michael Jackson",
+                category: "WHO SANG IT?",
+                question: 'Who performed the iconic song and music video "Thriller"?',
+                answers: ["A. Michael Jackson", "B. Prince", "C. David Bowie", "D. A dancing zombie"],
+                correct: "A"
+            },
+            {
+                song: "Imagine – John Lennon",
+                category: "COMMON PHRASES",
+                question: '"Imagine there\'s no heaven..." What\'s the next line?',
+                answers: ["A. It's easy if you try", "B. It's easy if you cry", "C. It's easy if you fry", "D. It's easy if you buy"],
+                correct: "A"
+            },
+            {
+                song: "Like a Rolling Stone – Bob Dylan",
+                category: "WHO SANG IT?",
+                question: 'Who wrote and sang "Like a Rolling Stone"?',
+                answers: ["A. Bob Dylan", "B. Neil Young", "C. Bruce Springsteen", "D. A tumbling boulder"],
+                correct: "A"
+            },
+            {
+                song: "Born to Run – Bruce Springsteen",
+                category: "FINISH THE RHYME",
+                question: '"In the day we sweat it out on the streets of a runaway American dream..." What\'s next?',
+                answers: ["A. At night we ride through the mansions of glory in suicide machines", "B. At night we ride through the mansions of glory in submarine machines", "C. At night we ride through the mansions of glory in caffeine machines", "D. At night we ride through the mansions of glory in tangerine machines"],
+                correct: "A"
+            },
+            {
+                song: "What's Going On – Marvin Gaye",
+                category: "WHO SANG IT?",
+                question: 'Who sang the soulful protest song "What\'s Going On"?',
+                answers: ["A. Stevie Wonder", "B. Marvin Gaye", "C. Otis Redding", "D. A concerned citizen"],
+                correct: "B"
+            },
+            {
+                song: "Let It Be – The Beatles",
+                category: "COMMON PHRASES",
+                question: '"When I find myself in times of trouble..." What happens next?',
+                answers: ["A. Mother Mary comes to me", "B. Mother Mary runs from me", "C. Mother Mary shuns me", "D. Mother Mary stuns me"],
+                correct: "A"
+            },
+            {
+                song: "Purple Rain – Prince",
+                category: "WHO SANG IT?",
+                question: 'Who is the artist behind "Purple Rain"?',
+                answers: ["A. Prince", "B. David Bowie", "C. Michael Jackson", "D. A colorful cloud"],
+                correct: "A"
+            },
+            {
+                song: "Stairway to Heaven – Led Zeppelin",
+                category: "FINISH THE RHYME",
+                question: '"There\'s a lady who\'s sure all that glitters is gold..." What\'s next?',
+                answers: ["A. And she's buying a stairway to heaven", "B. And she's buying a stairway to Devon", "C. And she's buying a stairway to seven", "D. And she's buying a stairway to leaven"],
+                correct: "A"
+            },
+            {
+                song: "Back in Black – AC/DC",
+                category: "WHO SANG IT?",
+                question: 'Which band is known for the song "Back in Black"?',
+                answers: ["A. Metallica", "B. AC/DC", "C. Guns N' Roses", "D. A shadowy figure"],
+                correct: "B"
+            },
+            {
+                song: "I Gotta Feeling – The Black Eyed Peas",
+                category: "COMMON PHRASES",
+                question: '"I gotta feeling that tonight\'s gonna be..." What?',
+                answers: ["A. A good night", "B. A bad night", "C. A sad night", "D. A mad night"],
+                correct: "A"
+            },
+            {
+                song: "Single Ladies (Put a Ring on It) – Beyoncé",
+                category: "FINISH THE RHYME",
+                question: '"All the single ladies, all the single ladies..." What\'s the next line?',
+                answers: ["A. Now put your hands up", "B. Now put your pants up", "C. Now put your plans up", "D. Now put your cans up"],
+                correct: "A"
+            },
+            {
+                song: "Every Breath You Take – The Police",
+                category: "WHO SANG IT?",
+                question: 'Which band performed "Every Breath You Take"?',
+                answers: ["A. The Police", "B. U2", "C. R.E.M.", "D. A watchful stalker"],
+                correct: "A"
+            },
+            {
+                song: "Bad Romance – Lady Gaga",
+                category: "COMMON PHRASES",
+                question: '"Rah-rah-ah-ah-ah, Roma Roma-ma..." What\'s next?',
+                answers: ["A. Gaga, ooh la-la", "B. Gaga, ooh na-na", "C. Gaga, ooh ha-ha", "D. Gaga, ooh ta-ta"],
+                correct: "A"
+            },
+            {
+                song: "Losing My Religion – R.E.M.",
+                category: "WHO SANG IT?",
+                question: 'Which band is known for the song "Losing My Religion"?',
+                answers: ["A. R.E.M.", "B. The Cure", "C. Radiohead", "D. A confused choir"],
+                correct: "A"
+            },
+            {
+                song: "Dream On – Aerosmith",
+                category: "FINISH THE RHYME",
+                question: '"Dream on, dream on, dream on..." What\'s the next part?',
+                answers: ["A. Dream until your dreams come true", "B. Dream until your dreams come blue", "C. Dream until your dreams come glue", "D. Dream until your dreams come flue"],
+                correct: "A"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let streak = 0;
+        let gameEnded = false;
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endGame();
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+            
+            document.getElementById('question-number').textContent = `QUESTION ${currentQuestionIndex + 1} / 30`;
+            document.getElementById('current-question').textContent = `${currentQuestionIndex + 1} / 30`;
+            document.getElementById('category').textContent = `CATEGORY: ${question.category}`;
+            document.getElementById('song-title').textContent = question.song;
+            document.getElementById('question-text').textContent = question.question;
+            
+            const answersGrid = document.getElementById('answers-grid');
+            answersGrid.innerHTML = '';
+            
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer;
+                button.dataset.answer = String.fromCharCode(65 + index); // A, B, C, D
+                button.onclick = () => selectAnswer(button.dataset.answer);
+                answersGrid.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedAnswer) {
+            if (gameEnded) return;
+            
+            const question = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.answer-btn');
+            
+            buttons.forEach(button => {
+                button.disabled = true;
+                if (button.dataset.answer === question.correct) {
+                    button.classList.add('correct');
+                } else if (button.dataset.answer === selectedAnswer && selectedAnswer !== question.correct) {
+                    button.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedAnswer === question.correct) {
+                score += 10;
+                streak++;
+                createConfetti();
+            } else {
+                streak = 0;
+            }
+            
+            updateScore();
+            
+            setTimeout(() => {
+                buttons.forEach(button => {
+                    button.classList.remove('correct', 'incorrect');
+                    button.disabled = false;
+                });
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('streak').textContent = streak;
+        }
+
+        function endGame() {
+            gameEnded = true;
+            document.getElementById('question-container').classList.add('hidden');
+            document.getElementById('game-over').classList.remove('hidden');
+            document.getElementById('final-score').textContent = `Final Score: ${score}/300 (${currentQuestionIndex}/30 questions)`;
+        }
+
+        function restartGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            streak = 0;
+            gameEnded = false;
+            
+            document.getElementById('question-container').classList.remove('hidden');
+            document.getElementById('game-over').classList.add('hidden');
+            
+            updateScore();
+            loadQuestion();
+        }
+
+        function createConfetti() {
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00', '#ff0000'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '1000';
+                confetti.style.borderRadius = '50%';
+                
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { transform: 'translateY(-10px) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(100vh) rotate(720deg)`, opacity: 0 }
+                ], {
+                    duration: 3000,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+                
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+
+        // Initialize the game
+        loadQuestion();
+    </script>
+</body>
+</html>
