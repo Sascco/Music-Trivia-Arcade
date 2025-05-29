@@ -156,6 +156,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
 
         .answer-btn:hover {
@@ -224,16 +225,6 @@
             font-size: 2rem;
             color: #ffff00;
             margin-bottom: 30px;
-        }
-
-        .confetti {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
         }
 
         @keyframes neonGlow {
@@ -362,211 +353,211 @@
                 song: "Bohemian Rhapsody – Queen",
                 category: "COMMON PHRASES",
                 question: '"Mama, just killed a man..." How does the song continue?',
-                answers: ["A. Put a gun against his head", "B. Made him spaghetti instead", "C. Pulled my hamstring in bed", "D. Gave him a loaf of bread"],
-                correct: "A"
+                answers: ["Put a gun against his head", "Made him spaghetti instead", "Pulled my hamstring in bed", "Gave him a loaf of bread"],
+                correct: 0
             },
             {
                 song: "I Will Always Love You – Whitney Houston",
                 category: "WHO SANG IT?",
                 question: 'Who originally wrote and performed "I Will Always Love You" before Whitney Houston\'s iconic version?',
-                answers: ["A. Dolly Parton", "B. Kenny Rogers", "C. Reba McEntire", "D. The ghost of Elvis"],
-                correct: "A"
+                answers: ["Kenny Rogers", "The ghost of Elvis", "Dolly Parton", "Reba McEntire"],
+                correct: 2
             },
             {
                 song: "Sweet Caroline – Neil Diamond",
                 category: "FINISH THE RHYME",
                 question: '"Sweet Caroline, good times never seemed so ____"',
-                answers: ["A. fine", "B. divine", "C. mine", "D. intertwined with licorice vines"],
-                correct: "A"
+                answers: ["divine", "good", "intertwined with licorice vines", "mine"],
+                correct: 1
             },
             {
                 song: "Don't Stop Believin' – Journey",
                 category: "COMMON PHRASES",
                 question: '"Just a small-town girl, livin\' in a lonely world..." What is the next line?',
-                answers: ["A. She took the midnight train going anywhere", "B. She ordered a pizza with extra care", "C. She knitted a sweater for a bear", "D. She became a millionaire"],
-                correct: "A"
+                answers: ["She ordered a pizza with extra care", "She became a millionaire", "She took the midnight train going anywhere", "She knitted a sweater for a bear"],
+                correct: 2
             },
             {
                 song: "Billie Jean – Michael Jackson",
                 category: "WHO SANG IT?",
                 question: 'Who sang the hit song "Billie Jean"?',
-                answers: ["A. Prince", "B. Michael Jackson", "C. Lionel Richie", "D. A very talented chimpanzee"],
-                correct: "B"
+                answers: ["A very talented chimpanzee", "Michael Jackson", "Prince", "Lionel Richie"],
+                correct: 1
             },
             {
                 song: "We Will Rock You – Queen",
                 category: "FINISH THE RHYME",
                 question: '"We will, we will ____"',
-                answers: ["A. rock you", "B. shock you", "C. mock you", "D. dock you, like a ship in view"],
-                correct: "A"
+                answers: ["shock you", "rock you", "dock you, like a ship in view", "mock you"],
+                correct: 1
             },
             {
                 song: "Livin' on a Prayer – Bon Jovi",
                 category: "COMMON PHRASES",
                 question: '"Once upon a time not so long ago..." What\'s the next line?',
-                answers: ["A. Tommy used to work on the docks", "B. Tommy used to work with the fox", "C. Tommy used to work with the clocks", "D. Tommy used to work with the socks"],
-                correct: "A"
+                answers: ["Tommy used to work with the socks", "Tommy used to work with the fox", "Tommy used to work with the clocks", "Tommy used to work on the docks"],
+                correct: 3
             },
             {
                 song: "Hotel California – Eagles",
                 category: "WHO SANG IT?",
                 question: 'Which band is famous for the song "Hotel California"?',
-                answers: ["A. The Doors", "B. The Eagles", "C. Fleetwood Mac", "D. A flock of seagulls"],
-                correct: "B"
+                answers: ["A flock of seagulls", "The Eagles", "The Doors", "Fleetwood Mac"],
+                correct: 1
             },
             {
                 song: "Sweet Child O' Mine – Guns N' Roses",
                 category: "FINISH THE RHYME",
                 question: '"She\'s got eyes of the bluest skies..." What\'s the next description?',
-                answers: ["A. As if they thought of rain", "B. As if they're filled with pain", "C. As if they're filled with novocaine", "D. As if they're filled with airplane"],
-                correct: "A"
+                answers: ["As if they're filled with novocaine", "As if they're filled with pain", "As if they're filled with airplane", "As if they thought of rain"],
+                correct: 3
             },
             {
                 song: "Wonderwall – Oasis",
                 category: "COMMON PHRASES",
                 question: '"Today is gonna be the day that..." What?',
-                answers: ["A. They're gonna throw it back to you", "B. They're gonna show it back to you", "C. They're gonna mow it back to you", "D. They're gonna row it back to you"],
-                correct: "A"
+                answers: ["They're gonna row it back to you", "They're gonna throw it back to you", "They're gonna mow it back to you", "They're gonna show it back to you"],
+                correct: 1
             },
             {
                 song: "Shape of You – Ed Sheeran",
                 category: "WHO SANG IT?",
                 question: 'Who sings the song "Shape of You"?',
-                answers: ["A. Sam Smith", "B. Ed Sheeran", "C. Harry Styles", "D. A very shapely robot"],
-                correct: "B"
+                answers: ["Sam Smith", "A very shapely robot", "Ed Sheeran", "Harry Styles"],
+                correct: 2
             },
             {
                 song: "Shake It Off – Taylor Swift",
                 category: "FINISH THE RHYME",
                 question: '"\'Cause the players gonna play, play, play, play, play..." What are the haters gonna do?',
-                answers: ["A. Haters gonna hate, hate, hate, hate, hate", "B. Haters gonna date, date, date, date, date", "C. Haters gonna wait, wait, wait, wait, wait", "D. Haters gonna skate, skate, skate, skate, skate"],
-                correct: "A"
+                answers: ["Haters gonna skate, skate, skate, skate, skate", "Haters gonna hate, hate, hate, hate, hate", "Haters gonna date, date, date, date, date", "Haters gonna wait, wait, wait, wait, wait"],
+                correct: 1
             },
             {
                 song: "Smells Like Teen Spirit – Nirvana",
                 category: "WHO SANG IT?",
                 question: 'Who is the lead singer of the band that performed "Smells Like Teen Spirit"?',
-                answers: ["A. Kurt Cobain", "B. Eddie Vedder", "C. Chris Cornell", "D. A grungy ghost"],
-                correct: "A"
+                answers: ["A grungy ghost", "Chris Cornell", "Kurt Cobain", "Eddie Vedder"],
+                correct: 2
             },
             {
                 song: "Hey Jude – The Beatles",
                 category: "FINISH THE RHYME",
                 question: '"Hey Jude, don\'t make it bad..." What\'s the next line?',
-                answers: ["A. Take a sad song and make it better", "B. Take a sad song and make it wetter", "C. Take a sad song and make it deader", "D. Take a sad song and make it cheddar"],
-                correct: "A"
+                answers: ["Take a sad song and make it cheddar", "Take a sad song and make it better", "Take a sad song and make it wetter", "Take a sad song and make it deader"],
+                correct: 1
             },
             {
                 song: "Rolling in the Deep – Adele",
                 category: "COMMON PHRASES",
                 question: '"There\'s a fire starting in my heart..." What\'s the next line?',
-                answers: ["A. Reaching a fever pitch and it's bringing me out the dark", "B. Reaching a fever pitch and it's bringing me out the park", "C. Reaching a fever pitch and it's bringing me out the lark", "D. Reaching a fever pitch and it's bringing me out the shark"],
-                correct: "A"
+                answers: ["Reaching a fever pitch and it's bringing me out the park", "Reaching a fever pitch and it's bringing me out the shark", "Reaching a fever pitch and it's bringing me out the dark", "Reaching a fever pitch and it's bringing me out the lark"],
+                correct: 2
             },
             {
                 song: "Thriller – Michael Jackson",
                 category: "WHO SANG IT?",
                 question: 'Who performed the iconic song and music video "Thriller"?',
-                answers: ["A. Michael Jackson", "B. Prince", "C. David Bowie", "D. A dancing zombie"],
-                correct: "A"
+                answers: ["David Bowie", "A dancing zombie", "Prince", "Michael Jackson"],
+                correct: 3
             },
             {
                 song: "Imagine – John Lennon",
                 category: "COMMON PHRASES",
                 question: '"Imagine there\'s no heaven..." What\'s the next line?',
-                answers: ["A. It's easy if you try", "B. It's easy if you cry", "C. It's easy if you fry", "D. It's easy if you buy"],
-                correct: "A"
+                answers: ["It's easy if you try", "It's easy if you fry", "It's easy if you buy", "It's easy if you cry"],
+                correct: 0
             },
             {
                 song: "Like a Rolling Stone – Bob Dylan",
                 category: "WHO SANG IT?",
                 question: 'Who wrote and sang "Like a Rolling Stone"?',
-                answers: ["A. Bob Dylan", "B. Neil Young", "C. Bruce Springsteen", "D. A tumbling boulder"],
-                correct: "A"
+                answers: ["Bruce Springsteen", "Bob Dylan", "A tumbling boulder", "Neil Young"],
+                correct: 1
             },
             {
                 song: "Born to Run – Bruce Springsteen",
                 category: "FINISH THE RHYME",
                 question: '"In the day we sweat it out on the streets of a runaway American dream..." What\'s next?',
-                answers: ["A. At night we ride through the mansions of glory in suicide machines", "B. At night we ride through the mansions of glory in submarine machines", "C. At night we ride through the mansions of glory in caffeine machines", "D. At night we ride through the mansions of glory in tangerine machines"],
-                correct: "A"
+                answers: ["At night we ride through the mansions of glory in tangerine machines", "At night we ride through the mansions of glory in submarine machines", "At night we ride through the mansions of glory in suicide machines", "At night we ride through the mansions of glory in caffeine machines"],
+                correct: 2
             },
             {
                 song: "What's Going On – Marvin Gaye",
                 category: "WHO SANG IT?",
                 question: 'Who sang the soulful protest song "What\'s Going On"?',
-                answers: ["A. Stevie Wonder", "B. Marvin Gaye", "C. Otis Redding", "D. A concerned citizen"],
-                correct: "B"
+                answers: ["Marvin Gaye", "A concerned citizen", "Stevie Wonder", "Otis Redding"],
+                correct: 0
             },
             {
                 song: "Let It Be – The Beatles",
                 category: "COMMON PHRASES",
                 question: '"When I find myself in times of trouble..." What happens next?',
-                answers: ["A. Mother Mary comes to me", "B. Mother Mary runs from me", "C. Mother Mary shuns me", "D. Mother Mary stuns me"],
-                correct: "A"
+                answers: ["Mother Mary shuns me", "Mother Mary comes to me", "Mother Mary runs from me", "Mother Mary stuns me"],
+                correct: 1
             },
             {
                 song: "Purple Rain – Prince",
                 category: "WHO SANG IT?",
                 question: 'Who is the artist behind "Purple Rain"?',
-                answers: ["A. Prince", "B. David Bowie", "C. Michael Jackson", "D. A colorful cloud"],
-                correct: "A"
+                answers: ["A colorful cloud", "David Bowie", "Michael Jackson", "Prince"],
+                correct: 3
             },
             {
                 song: "Stairway to Heaven – Led Zeppelin",
                 category: "FINISH THE RHYME",
                 question: '"There\'s a lady who\'s sure all that glitters is gold..." What\'s next?',
-                answers: ["A. And she's buying a stairway to heaven", "B. And she's buying a stairway to Devon", "C. And she's buying a stairway to seven", "D. And she's buying a stairway to leaven"],
-                correct: "A"
+                answers: ["And she's buying a stairway to leaven", "And she's buying a stairway to heaven", "And she's buying a stairway to seven", "And she's buying a stairway to Devon"],
+                correct: 1
             },
             {
                 song: "Back in Black – AC/DC",
                 category: "WHO SANG IT?",
                 question: 'Which band is known for the song "Back in Black"?',
-                answers: ["A. Metallica", "B. AC/DC", "C. Guns N' Roses", "D. A shadowy figure"],
-                correct: "B"
+                answers: ["Guns N' Roses", "A shadowy figure", "AC/DC", "Metallica"],
+                correct: 2
             },
             {
                 song: "I Gotta Feeling – The Black Eyed Peas",
                 category: "COMMON PHRASES",
                 question: '"I gotta feeling that tonight\'s gonna be..." What?',
-                answers: ["A. A good night", "B. A bad night", "C. A sad night", "D. A mad night"],
-                correct: "A"
+                answers: ["A mad night", "A good night", "A bad night", "A sad night"],
+                correct: 1
             },
             {
                 song: "Single Ladies (Put a Ring on It) – Beyoncé",
                 category: "FINISH THE RHYME",
                 question: '"All the single ladies, all the single ladies..." What\'s the next line?',
-                answers: ["A. Now put your hands up", "B. Now put your pants up", "C. Now put your plans up", "D. Now put your cans up"],
-                correct: "A"
+                answers: ["Now put your cans up", "Now put your plans up", "Now put your hands up", "Now put your pants up"],
+                correct: 2
             },
             {
                 song: "Every Breath You Take – The Police",
                 category: "WHO SANG IT?",
                 question: 'Which band performed "Every Breath You Take"?',
-                answers: ["A. The Police", "B. U2", "C. R.E.M.", "D. A watchful stalker"],
-                correct: "A"
+                answers: ["The Police", "R.E.M.", "A watchful stalker", "U2"],
+                correct: 0
             },
             {
                 song: "Bad Romance – Lady Gaga",
                 category: "COMMON PHRASES",
                 question: '"Rah-rah-ah-ah-ah, Roma Roma-ma..." What\'s next?',
-                answers: ["A. Gaga, ooh la-la", "B. Gaga, ooh na-na", "C. Gaga, ooh ha-ha", "D. Gaga, ooh ta-ta"],
-                correct: "A"
+                answers: ["Gaga, ooh ta-ta", "Gaga, ooh ha-ha", "Gaga, ooh la-la", "Gaga, ooh na-na"],
+                correct: 2
             },
             {
                 song: "Losing My Religion – R.E.M.",
                 category: "WHO SANG IT?",
                 question: 'Which band is known for the song "Losing My Religion"?',
-                answers: ["A. R.E.M.", "B. The Cure", "C. Radiohead", "D. A confused choir"],
-                correct: "A"
+                answers: ["Radiohead", "R.E.M.", "A confused choir", "The Cure"],
+                correct: 1
             },
             {
                 song: "Dream On – Aerosmith",
                 category: "FINISH THE RHYME",
                 question: '"Dream on, dream on, dream on..." What\'s the next part?',
-                answers: ["A. Dream until your dreams come true", "B. Dream until your dreams come blue", "C. Dream until your dreams come glue", "D. Dream until your dreams come flue"],
-                correct: "A"
+                answers: ["Dream until your dreams come flue", "Dream until your dreams come blue", "Dream until your dreams come true", "Dream until your dreams come glue"],
+                correct: 2
             }
         ];
 
@@ -595,8 +586,8 @@
             question.answers.forEach((answer, index) => {
                 const button = document.createElement('button');
                 button.className = 'answer-btn';
-                button.textContent = answer;
-                button.dataset.answer = String.fromCharCode(65 + index); // A, B, C, D
+                button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
+                button.dataset.answer = String.fromCharCode(65 + index);
                 button.onclick = () => selectAnswer(button.dataset.answer);
                 answersGrid.appendChild(button);
             });
@@ -607,17 +598,18 @@
             
             const question = questions[currentQuestionIndex];
             const buttons = document.querySelectorAll('.answer-btn');
+            const selectedIndex = selectedAnswer.charCodeAt(0) - 65;
             
-            buttons.forEach(button => {
+            buttons.forEach((button, index) => {
                 button.disabled = true;
-                if (button.dataset.answer === question.correct) {
+                if (index === question.correct) {
                     button.classList.add('correct');
-                } else if (button.dataset.answer === selectedAnswer && selectedAnswer !== question.correct) {
+                } else if (index === selectedIndex && selectedIndex !== question.correct) {
                     button.classList.add('incorrect');
                 }
             });
             
-            if (selectedAnswer === question.correct) {
+            if (selectedIndex === question.correct) {
                 score += 10;
                 streak++;
                 createConfetti();
