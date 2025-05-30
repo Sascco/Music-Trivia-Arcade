@@ -815,39 +815,42 @@ function startTimer() {
     }
 
     function selectAnswer(selectedAnswer) {
-        if (gameEnded || !gameStarted) return;
-        
-        clearInterval(timer);
-        
-        const question = questions[currentQuestionIndex];
-        const buttons = document.querySelectorAll('.answer-btn');
-        const selectedIndex = selectedAnswer.charCodeAt(0) - 65;
-        
-        buttons.forEach((button, index) => {
-            button.disabled = true;
-            if (index === question.correct) {
+    if (gameEnded || !gameStarted) return;
+    clearInterval(timer);
+
+    const question = questions[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.answer-btn');
+    const selectedIndex = selectedAnswer.charCodeAt(0) - 65;
+
+    buttons.forEach((button, index) => {
+        button.disabled = true;
+        // Only highlight the selected button
+        if (index === selectedIndex) {
+            if (selectedIndex === question.correct) {
                 button.classList.add('correct');
-            } else if (index === selectedIndex && selectedIndex !== question.correct) {
+            } else {
                 button.classList.add('incorrect');
             }
-        });
-        
-        if (selectedIndex === question.correct) {
-            score += 10;
-            streak++;
-            createConfetti();
-        } else {
-            streak = 0;
         }
-        
-        updateScore();
-        
-        setTimeout(() => {
-            buttons.forEach(button => {
-                button.classList.remove('correct', 'incorrect');
-                button.disabled = false;
-            });
-        }, 2000);
+    });
+
+    if (selectedIndex === question.correct) {
+        score += 10;
+        streak++;
+        createConfetti();
+    } else {
+        streak = 0;
+    }
+
+    updateScore();
+
+    setTimeout(() => {
+        buttons.forEach(button => {
+            button.classList.remove('correct', 'incorrect');
+            button.disabled = false;
+        });
+    }, 3000); // 3 seconds
+
     }
 
     function nextQuestion() {
