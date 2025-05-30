@@ -6,490 +6,343 @@
     <title>TripleTen's JukeBox</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Existing Styles (same as your original file) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Orbitron', monospace;
-            background: #0a0a0a;
-            background-image:
-                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #00ffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-        }
-
-        .timer-display {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 0, 255, 0.1);
-            border: 2px solid #ff00ff;
-            border-radius: 10px;
-            padding: 15px 25px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
-            z-index: 1000;
-        }
-
-        .timer-label {
-            font-size: 0.9rem;
-            color: #00ffff;
-            margin-bottom: 5px;
-        }
-
-        .timer-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ffff00;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .title {
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: neonGlow 2s ease-in-out infinite alternate, gradientShift 3s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
-            margin-bottom: 20px;
-        }
-
-        .score-board {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .score-item {
-            background: rgba(255, 0, 255, 0.1);
-            border: 2px solid #ff00ff;
-            border-radius: 10px;
-            padding: 15px 25px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
-        }
-
-        .score-label {
-            font-size: 0.9rem;
-            color: #00ffff;
-            margin-bottom: 5px;
-        }
-
-        .score-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ffff00;
-        }
-
-        .question-container {
-            background: rgba(0, 0, 0, 0.8);
-            border: 3px solid #00ffff;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-            position: relative;
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .question-number {
-            font-size: 1.2rem;
-            color: #ff00ff;
-            font-weight: bold;
-        }
-
-        .category {
-            background: linear-gradient(45deg, #ff00ff, #ffff00);
-            color: #000;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .song-info {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .song-title {
-            font-size: 1.8rem;
-            color: #ffff00;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
-        }
-
-        .question-text {
-            font-size: 1.3rem;
-            color: #00ffff;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .answers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .answer-btn {
-            background: linear-gradient(45deg, #1a1a1a, #333);
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-        }
-
-        .answer-btn:hover {
-            background: linear-gradient(45deg, #00ffff, #0099cc);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .answer-btn.correct {
-            background: linear-gradient(45deg, #00ff00, #00cc00);
-            border-color: #00ff00;
-            color: #000;
-            animation: correctPulse 0.5s ease-in-out;
-        }
-
-        .answer-btn.incorrect {
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-            border-color: #ff0000;
-            color: #fff;
-            animation: incorrectShake 0.5s ease-in-out;
-        }
-
-        .controls {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .start-btn {
-            background: linear-gradient(45deg, #00ff00, #00cc00);
-            border: none;
-            color: #000;
-            padding: 20px 40px;
-            margin: 0 10px;
-            border-radius: 25px;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
-            animation: startPulse 2s ease-in-out infinite;
-        }
-
-        .start-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-        }
-
-        @keyframes startPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
-            }
-        }
-
-        .control-btn {
-            background: linear-gradient(45deg, #ff00ff, #cc00cc);
-            border: none;
-            color: #fff;
-            padding: 15px 30px;
-            margin: 0 10px;
-            border-radius: 25px;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
-        }
-
-        .control-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 0, 255, 0.5);
-        }
-
-        .game-over {
-            text-align: center;
-            padding: 50px;
-            background: rgba(255, 0, 0, 0.1);
-            border: 3px solid #ff0000;
-            border-radius: 15px;
-            margin: 30px 0;
-        }
-
-        .game-over h2 {
-            font-size: 3rem;
-            color: #ff0000;
-            margin-bottom: 20px;
-            animation: glitch 1s infinite;
-        }
-
-        .final-score {
-            font-size: 2rem;
-            color: #ffff00;
-            margin-bottom: 30px;
-        }
-
-        @keyframes neonGlow {
-            from {
-                text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
-            }
-
-            to {
-                text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5);
-            }
-        }
-
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        @keyframes blink {
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes correctPulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes incorrectShake {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-5px);
-            }
-
-            75% {
-                transform: translateX(5px);
-            }
-        }
-
-        @keyframes glitch {
-            0% {
-                transform: translate(0);
-            }
-
-            20% {
-                transform: translate(-2px, 2px);
-            }
-
-            40% {
-                transform: translate(-2px, -2px);
-            }
-
-            60% {
-                transform: translate(2px, 2px);
-            }
-
-            80% {
-                transform: translate(2px, -2px);
-            }
-
-            100% {
-                transform: translate(0);
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
-            }
-
-            .question-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .answers-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .score-board {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-
-            .timer-display {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin-bottom: 20px;
-            }
-        }
-
-        /* New Styles */
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1001; /* Ensure it's on top */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .welcome-screen h2,
-        .rules-screen h2 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            color: #00ffff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-        }
-
-        .welcome-screen p {
-            font-size: 1.5rem;
-            color: #ffff00;
-            margin-bottom: 40px;
-        }
-
-        .rules-list {
-            list-style-type: none;
-            padding: 0;
-            margin-bottom: 30px;
-        }
-
-        .rules-list li {
-            font-size: 1.2rem;
-            color: #00ffff;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        .continue-btn {
-            background: linear-gradient(45deg, #00ffff, #0099cc);
-            border: none;
-            color: #000;
-            padding: 15px 30px;
-            margin: 0 10px;
-            border-radius: 25px;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-        }
-
-        .continue-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-        }
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+    font-family: 'Orbitron', monospace;
+    background: #0a0a0a;
+    background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #00ffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    }
+
+    .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    }
+
+    .timer-display {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 255, 0.1);
+    border: 2px solid #ff00ff;
+    border-radius: 10px;
+    padding: 15px 25px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    z-index: 1000;
+    }
+
+    .timer-label {
+    font-size: 0.9rem;
+    color: #00ffff;
+    margin-bottom: 5px;
+    }
+
+    .timer-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffff00;
+    }
+
+    .header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    }
+
+    .title {
+    font-size: 4rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: neonGlow 2s ease-in-out infinite alternate, gradientShift 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    margin-bottom: 20px;
+    }
+
+    .score-board {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    }
+
+    .score-item {
+    background: rgba(255, 0, 255, 0.1);
+    border: 2px solid #ff00ff;
+    border-radius: 10px;
+    padding: 15px 25px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .score-label {
+    font-size: 0.9rem;
+    color: #00ffff;
+    margin-bottom: 5px;
+    }
+
+    .score-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffff00;
+    }
+
+    .question-container {
+    background: rgba(0, 0, 0, 0.8);
+    border: 3px solid #00ffff;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+    position: relative;
+    }
+
+    .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    }
+
+    .question-number {
+    font-size: 1.2rem;
+    color: #ff00ff;
+    font-weight: bold;
+    }
+
+    .category {
+    background: linear-gradient(45deg, #ff00ff, #ffff00);
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    }
+
+    .song-info {
+    text-align: center;
+    margin-bottom: 25px;
+    }
+
+    .song-title {
+    font-size: 1.8rem;
+    color: #ffff00;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    }
+
+    .question-text {
+    font-size: 1.3rem;
+    color: #00ffff;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    text-align: center;
+    }
+
+    .answers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+    }
+
+    .answer-btn {
+    background: linear-gradient(45deg, #1a1a1a, #333);
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    }
+
+    .answer-btn:hover {
+    background: linear-gradient(45deg, #00ffff, #0099cc);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    transform: translateY(-2px);
+    }
+
+    .answer-btn.correct {
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+    border-color: #00ff00;
+    color: #000;
+    animation: correctPulse 0.5s ease-in-out;
+    }
+
+    .answer-btn.incorrect {
+    background: linear-gradient(45deg, #ff0000, #cc0000);
+    border-color: #ff0000;
+    color: #fff;
+    animation: incorrectShake 0.5s ease-in-out;
+    }
+
+    .controls {
+    text-align: center;
+    margin-top: 30px;
+    }
+
+    .start-btn {
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+    border: none;
+    color: #000;
+    padding: 20px 40px;
+    margin: 0 10px;
+    border-radius: 25px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    animation: startPulse 2s ease-in-out infinite;
+    }
+
+    .start-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+    }
+
+    @keyframes startPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.4); }
+    50% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.8); }
+    }
+
+    .control-btn {
+    background: linear-gradient(45deg, #ff00ff, #cc00cc);
+    border: none;
+    color: #fff;
+    padding: 15px 30px;
+    margin: 0 10px;
+    border-radius: 25px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+    }
+
+    .control-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.5);
+    }
+
+    .game-over {
+    text-align: center;
+    padding: 50px;
+    background: rgba(255, 0, 0, 0.1);
+    border: 3px solid #ff0000;
+    border-radius: 15px;
+    margin: 30px 0;
+    }
+
+    .game-over h2 {
+    font-size: 3rem;
+    color: #ff0000;
+    margin-bottom: 20px;
+    animation: glitch 1s infinite;
+    }
+
+    .final-score {
+    font-size: 2rem;
+    color: #ffff00;
+    margin-bottom: 30px;
+    }
+
+    @keyframes neonGlow {
+    from { text-shadow: 0 0 20px rgba(255, 0, 255, 0.5); }
+    to { text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5); }
+    }
+
+    @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+    }
+
+    @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+    }
+
+    @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+    }
+
+    @keyframes incorrectShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+    }
+
+    @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+    }
+
+    .hidden {
+    display: none;
+    }
+
+    @media (max-width: 768px) {
+    .title {
+    font-size: 2.5rem;
+    }
+    
+    .question-header {
+    flex-direction: column;
+    gap: 10px;
+    }
+    
+    .answers-grid {
+    grid-template-columns: 1fr;
+    }
+    
+    .score-board {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    }
+
+    .timer-display {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 20px;
+    }
+    }
     </style>
 </head>
 <body>
-
-    <!-- Welcome Screen -->
-    <div class="screen welcome-screen" id="welcome-screen">
-        <h2>Welcome to TripleTen's JukeBox!</h2>
-        <p>Are you ready to test your music knowledge?</p>
-        <button class="continue-btn" onclick="showRules()">Show Rules</button>
-    </div>
-
-    <!-- Rules Screen -->
-    <div class="screen rules-screen hidden" id="rules-screen">
-        <h2>Game Rules</h2>
-        <ul class="rules-list">
-            <li>The participation order will be alphabetical.</li>
-            <li>Choose the most suitable answer.</li>
-            <li>If your answer is incorrect, you will be automatically out of the game until the next round, and another player can "steal" the answer.</li>
-            <li>You can steal as many times as you can.</li>
-            <li>You are not allowed to use the chat to provide answers.</li>
-        </ul>
-        <button class="continue-btn" onclick="hideScreens()">Start Game</button>
-    </div>
-
-
     <div class="timer-display" id="timer-display">
         <div class="timer-label">TIME</div>
         <div class="timer-value" id="timer">15</div>
@@ -515,30 +368,30 @@
             </div>
         </div>
 
-        <div class="question-container hidden" id="question-container">
+        <div class="question-container" id="question-container">
             <div class="question-header">
                 <div class="question-number" id="question-number">QUESTION 1 / 45</div>
                 <div class="category" id="category">CATEGORY: COMMON PHRASES</div>
             </div>
-
+            
             <div class="song-info">
                 <div class="song-title" id="song-title">Bohemian Rhapsody – Queen</div>
             </div>
-
+            
             <div class="question-text" id="question-text">
                 "Mama, just killed a man..." How does the song continue?
             </div>
-
+            
             <div class="answers-grid" id="answers-grid">
                 <button class="answer-btn" data-answer="A">A. Put a gun against his head</button>
                 <button class="answer-btn" data-answer="B">B. Made him spaghetti instead</button>
                 <button class="answer-btn" data-answer="C">C. Pulled my hamstring in bed</button>
-                <button class="answer-btn" data-answer="D">Gave him a loaf of bread</button>
+                <button class="answer-btn" data-answer="D">D. Gave him a loaf of bread</button>
             </div>
         </div>
 
         <div class="controls">
-            <button class="start-btn hidden" id="start-btn" onclick="startGame()">🚀 START GAME 🚀</button>
+            <button class="start-btn" id="start-btn" onclick="startGame()">🚀 START GAME 🚀</button>
             <button class="control-btn hidden" id="next-btn" onclick="nextQuestion()">NEXT QUESTION ▶</button>
             <button class="control-btn" id="restart-btn" onclick="restartGame()">🔄 RESTART GAME</button>
         </div>
@@ -550,7 +403,6 @@
             <p style="color: #ffff00; animation: blink 1.5s infinite;">🪙 INSERT COIN TO PLAY AGAIN 🪙</p>
         </div>
     </div>
-
 
     <script>
     // Game Data
